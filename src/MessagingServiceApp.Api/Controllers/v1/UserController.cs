@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MessagingServiceApp.Application.DTO.Request;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,12 @@ namespace MessagingServiceApp.Api.Controllers.v1
         public async Task<IActionResult> Get()
         {
             return Ok("");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromQuery]NewUserRequestModel newUserRequestModel )
+        {
+            
         }
     }
 }

@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ED5900A3-9A21-4C33-A4E4-9B1F7B09D90D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagingServiceApp.Api", "src\MessagingServiceApp.Api\MessagingServiceApp.Api.csproj", "{D8FF6024-41F2-4A12-A6D5-FAA174772E09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessagingServiceApp.Api", "src\MessagingServiceApp.Api\MessagingServiceApp.Api.csproj", "{D8FF6024-41F2-4A12-A6D5-FAA174772E09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagingServiceApp.Application", "src\MessagingServiceApp.Application\MessagingServiceApp.Application.csproj", "{0AB7D3AD-6E9B-4E3D-A58E-A4A9613B0534}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessagingServiceApp.Application", "src\MessagingServiceApp.Application\MessagingServiceApp.Application.csproj", "{0AB7D3AD-6E9B-4E3D-A58E-A4A9613B0534}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagingServiceApp.Common", "src\MessagingServiceApp.Common\MessagingServiceApp.Common.csproj", "{5D613342-6EFD-4E65-8D60-BBB25D0A586F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessagingServiceApp.Common", "src\MessagingServiceApp.Common\MessagingServiceApp.Common.csproj", "{5D613342-6EFD-4E65-8D60-BBB25D0A586F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagingServiceApp.Infrastructure", "src\MessagingServiceApp.Infrastructure\MessagingServiceApp.Infrastructure.csproj", "{ED9DA1D1-598C-43B5-9ED2-913D8484C251}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessagingServiceApp.Infrastructure", "src\MessagingServiceApp.Infrastructure\MessagingServiceApp.Infrastructure.csproj", "{ED9DA1D1-598C-43B5-9ED2-913D8484C251}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
