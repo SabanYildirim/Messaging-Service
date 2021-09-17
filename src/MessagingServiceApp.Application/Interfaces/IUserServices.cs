@@ -9,6 +9,6 @@ namespace MessagingServiceApp.Application.Interfaces
 {
     public interface IUserServices
     {
-        Task<bool> CreateUser(NewUserRequestModel newUserRequestModel);
+        Task<bool> Add(NewUserRequestModel newUserRequestModel);
     }
 }

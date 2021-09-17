@@ -1,10 +1,7 @@
-﻿using MessagingServiceApp.Application.Interfaces;
-using MessagingServiceApp.Common;
+﻿using MessagingServiceApp.Common;
+using MessagingServiceApp.Infrastructure.Abstractions;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MessagingServiceApp.Infrastructure.Context
 {

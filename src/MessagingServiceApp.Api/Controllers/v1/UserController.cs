@@ -1,4 +1,5 @@
 ﻿using MessagingServiceApp.Application.DTO.Request;
+using MessagingServiceApp.Application.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,12 @@ namespace MessagingServiceApp.Api.Controllers.v1
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly IUserServices _userServices;
+
+        public UserController(IUserServices userServices)
+        {
+            _userServices = userServices;
+        }
 
         [HttpGet("/getall")]
         public async Task<IActionResult> Get()
@@ -22,7 +29,7 @@ namespace MessagingServiceApp.Api.Controllers.v1
         [HttpPost]
         public async Task<IActionResult> Create([FromQuery]NewUserRequestModel newUserRequestModel )
         {
-            
+            return Ok(_userServices.Add(newUserRequestModel));
         }
     }
 }

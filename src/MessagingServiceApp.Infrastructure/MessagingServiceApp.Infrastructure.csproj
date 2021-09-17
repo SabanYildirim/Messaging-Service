@@ -5,15 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
+    <PackageReference Include="MongoDB.Bson" Version="2.13.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.13.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MessagingServiceApp.Application\MessagingServiceApp.Application.csproj" />
+    <ProjectReference Include="..\MessagingServiceApp.Common\MessagingServiceApp.Common.csproj" />
   </ItemGroup>
 
 </Project>

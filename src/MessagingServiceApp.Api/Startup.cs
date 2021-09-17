@@ -13,11 +13,23 @@ using System.Reflection;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using MessagingServiceApp.Application.Extensions;
+using MessagingServiceApp.Common.Extensions;
+using MessagingServiceApp.Infrastructure.Extensions;
+using MessagingServiceApp.Common;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace MessagingServiceApp.Api
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -66,6 +78,14 @@ namespace MessagingServiceApp.Api
                 cfg.SubstituteApiVersionInUrl = true;
                 cfg.AssumeDefaultVersionWhenUnspecified = true;
             });
+
+            services.Configure<MongoDbSettings>(Configuration.GetSection("MongoDbSettings"));
+
+            services.AddSingleton<IMongoDbSettings>(serviceProvider => serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+
+            services.AddApplicationLayer();
+            services.AddCommonLayer();
+            services.AddInfrastructureLayer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

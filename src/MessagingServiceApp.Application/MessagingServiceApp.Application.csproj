@@ -15,4 +15,8 @@
     <PackageReference Include="MongoDB.Driver" Version="2.13.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MessagingServiceApp.Infrastructure\MessagingServiceApp.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
