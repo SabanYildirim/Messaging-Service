@@ -1,4 +1,5 @@
 ﻿using MessagingServiceApp.Application.DTO.Request;
+using MessagingServiceApp.Application.DTO.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace MessagingServiceApp.Application.Interfaces
 {
     public interface IUserServices
     {
-        Task<bool> Add(NewUserRequestModel newUserRequestModel);
+        Task<ServiceResponse<bool>> Add(NewUserRequestModel NewUserRequestModel);
+
+        Task<ServiceResponse<string>> Login(string UserName, string Password);
     }
 }

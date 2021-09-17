@@ -8,6 +8,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 COPY ["src/MessagingServiceApp.Api/MessagingServiceApp.Api.csproj", "src/MessagingServiceApp.Api/"]
+COPY ["src/MessagingServiceApp.Application/MessagingServiceApp.Application.csproj", "src/MessagingServiceApp.Application/"]
+COPY ["src/MessagingServiceApp.Infrastructure/MessagingServiceApp.Infrastructure.csproj", "src/MessagingServiceApp.Infrastructure/"]
+COPY ["src/MessagingServiceApp.Common/MessagingServiceApp.Common.csproj", "src/MessagingServiceApp.Common/"]
 RUN dotnet restore "src/MessagingServiceApp.Api/MessagingServiceApp.Api.csproj"
 COPY . .
 WORKDIR "/src/src/MessagingServiceApp.Api"

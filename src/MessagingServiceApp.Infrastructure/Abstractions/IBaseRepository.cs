@@ -9,7 +9,7 @@ namespace MessagingServiceApp.Infrastructure.Abstractions
 {
     public interface IBaseRepository<T> where T : BaseEntity
     {
-        T Add(T entity);
+        Task<T> Add(T entity);
         T GetById(Guid id);
         void Remove(Guid id);
         IEnumerable<T> GetAll();

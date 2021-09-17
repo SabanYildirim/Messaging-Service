@@ -20,7 +20,7 @@ namespace MessagingServiceApp.Infrastructure.Repositories
             _dbCollection = _mongoContext.GetCollection<T>(typeof(T).Name);
         }
 
-        public virtual T Add(T entity)
+        public async virtual Task<T> Add(T entity)
         {
             _dbCollection.InsertOne(entity);
             return entity;

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessagingServiceApp.Common"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessagingServiceApp.Infrastructure", "src\MessagingServiceApp.Infrastructure\MessagingServiceApp.Infrastructure.csproj", "{ED9DA1D1-598C-43B5-9ED2-913D8484C251}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A7E05BB3-53A5-4938-B988-F833689B2612}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{ED9DA1D1-598C-43B5-9ED2-913D8484C251}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED9DA1D1-598C-43B5-9ED2-913D8484C251}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED9DA1D1-598C-43B5-9ED2-913D8484C251}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7E05BB3-53A5-4938-B988-F833689B2612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7E05BB3-53A5-4938-B988-F833689B2612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7E05BB3-53A5-4938-B988-F833689B2612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7E05BB3-53A5-4938-B988-F833689B2612}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

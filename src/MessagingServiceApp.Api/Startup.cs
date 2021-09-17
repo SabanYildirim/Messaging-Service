@@ -19,6 +19,10 @@ using MessagingServiceApp.Infrastructure.Extensions;
 using MessagingServiceApp.Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using MessagingServiceApp.Common.Middlewares;
 
 namespace MessagingServiceApp.Api
 {
@@ -34,6 +38,9 @@ namespace MessagingServiceApp.Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+            services.AddControllers();
+
             services.AddSwaggerGen(c =>
             {
                 var provider = services.BuildServiceProvider();
@@ -86,6 +93,28 @@ namespace MessagingServiceApp.Api
             services.AddApplicationLayer();
             services.AddCommonLayer();
             services.AddInfrastructureLayer();
+
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(opt => {
+                opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                { 
+                   ValidateIssuer = true,
+                   ValidateAudience = true,
+                   ValidateLifetime = true,
+                   ValidateIssuerSigningKey = true,
+                   ValidIssuer = Configuration["JwtIssuer"],
+                   ValidAudience = Configuration["JwtAudience"],
+                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSecurityKey"])),
+                };
+            });
+
+            services.AddAuthenticationCore();
+
+            services.AddLogging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,6 +134,13 @@ namespace MessagingServiceApp.Api
                     c.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
                 }
             });
+
+            app.UseCors(x => x
+              .AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
+
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
