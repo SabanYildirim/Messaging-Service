@@ -14,8 +14,8 @@ namespace MessagingServiceApp.Common.Extensions
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var user = (string)context.HttpContext.Items["username"];
-            if (user == null)
+            var username = (string)context.HttpContext.Items["username"];
+            if (username == null)
             {
                 // not logged in
                 context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };

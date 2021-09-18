@@ -9,5 +9,6 @@ namespace MessagingServiceApp.Infrastructure.BusinessEntities
         public string Name { get; set; }
         public string SureName { get; set; }
         public string Password { get; set; }
+        public bool IsActive { get; set; }
     }
 }

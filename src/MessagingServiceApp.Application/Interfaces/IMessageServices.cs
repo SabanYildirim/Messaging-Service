@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace MessagingServiceApp.Application.Interfaces
 {
-    public interface IUserServices
+    public interface IMessageServices
     {
-        Task<ServiceResponse<bool>> Add(NewUserRequestModel NewUserRequestModel);
-
-        Task<ServiceResponse<UserLoginResponse>> Login(UserLoginRequestModel userLoginRequestModel);
+        Task<ServiceResponse<bool>> SendMessage(UserSenderMessageRequestModel userSenderMessageRequestModel, string sender);
     }
 }

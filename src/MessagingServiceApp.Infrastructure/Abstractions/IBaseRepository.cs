@@ -12,7 +12,7 @@ namespace MessagingServiceApp.Infrastructure.Abstractions
         Task<T> Add(T entity);
         T GetById(Guid id);
         void Remove(Guid id);
-        IEnumerable<T> GetAll();
+        Task<IEnumerable<T>> GetAll();
         void Update(T entity);
     }
 }

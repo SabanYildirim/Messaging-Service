@@ -1,12 +1,12 @@
 ﻿using MessagingServiceApp.Application.DTO.Request;
 using MessagingServiceApp.Application.DTO.Response;
 using MessagingServiceApp.Application.Interfaces;
+using MessagingServiceApp.Common.Utilities;
 using MessagingServiceApp.Infrastructure.Abstractions;
 using MessagingServiceApp.Infrastructure.BusinessEntities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -27,49 +27,43 @@ namespace MessagingServiceApp.Application.Services
 
         public async Task<ServiceResponse<bool>> Add(NewUserRequestModel newUserRequestModel)
         {
-            try
+            User entity = new User();
+            entity.Name = newUserRequestModel.Name;
+            entity.SureName = newUserRequestModel.SureName;
+            entity.UserName = newUserRequestModel.UserName;
+            entity.Password = newUserRequestModel.Password;
+
+            var user = await _userRepository.Add(entity);
+
+            return new ServiceResponse<bool>()
             {
-                User entity = new User();
-
-                entity.Name = newUserRequestModel.Name;
-                entity.SureName = newUserRequestModel.SureName;
-                entity.UserName = newUserRequestModel.UserName;
-                entity.Password = newUserRequestModel.Password;
-
-                var user = await _userRepository.Add(entity);
-
-                return new ServiceResponse<bool>()
-                {
-                     Value = user != null,
-                };
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+                Value = user != null,
+            };
         }
 
-        public Task<ServiceResponse<string>> Login(string UserName, string Password)
+        public async Task<ServiceResponse<UserLoginResponse>> Login(UserLoginRequestModel userLoginReques)
         {
-            //db user verify
             try
             {
+                var dbUser = await _userRepository.GetAll();
 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSecurityKey"].ToString()));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                var expiry = DateTime.Now.AddDays(int.Parse(_configuration["JwtExpireInDays"].ToString()));
-                var claims = new[]
+                var user = dbUser.FirstOrDefault(i => i.UserName == userLoginReques.username && i.Password == userLoginReques.password);
+
+                if (user == null)
+                    throw new Exception("User not found or given information is wrong");
+
+                if (!user.IsActive)
+                    throw new Exception("User state is Passive!");
+
+                var token = new JwtToken().GenerateToken(userLoginReques.username, _configuration["JwtSecurityKey"].ToString(), _configuration["JwtExpireInDays"].ToString(), _configuration["JwtAudience"], _configuration["JwtIssuer"]);
+
+                return new ServiceResponse<UserLoginResponse>()
                 {
-                    new Claim(ClaimTypes.Name,UserName)
+                    Value = new UserLoginResponse
+                    {
+                        token = token,
+                    },
                 };
-
-                var token = new JwtSecurityToken(_configuration["JwtIssuer"], _configuration["JwtAudience"], claims, null, expiry, creds);
-                String tokenStr = new JwtSecurityTokenHandler().WriteToken(token);
-
-                return Task.FromResult(new ServiceResponse<string>()
-                {
-                    Value = tokenStr,
-                });
             }
 
             catch (Exception ex)

@@ -17,10 +17,12 @@ namespace MessagingServiceApp.Api.Controllers.v1
     {
         private readonly IUserServices _userServices;
         private readonly ILogger<UserController> _logger;
+        private readonly IMessageServices _messageServices;
 
-        public UserController(IUserServices userServices, ILogger<UserController> logger)
+        public UserController(IUserServices userServices, IMessageServices messageServices, ILogger<UserController> logger)
         {
             _userServices = userServices;
+            _messageServices = messageServices;
             _logger = logger;
         }
 
@@ -32,9 +34,9 @@ namespace MessagingServiceApp.Api.Controllers.v1
         }
 
         [HttpPost("/login")]
-        public async Task<IActionResult> Login(string username,string password)
+        public async Task<IActionResult> Login([FromQuery]UserLoginRequestModel userLoginRequest)
         {
-            return Ok(await _userServices.Login(username,password));
+            return Ok(await _userServices.Login(userLoginRequest));
         }
 
         [HttpPost("/add")]
@@ -43,6 +45,13 @@ namespace MessagingServiceApp.Api.Controllers.v1
             _logger.LogInformation($"Random Value is test");
 
             return Ok(await _userServices.Add(newUserRequestModel));
+        }
+
+        [HttpPost("/sendMessage")]
+        [Authorize]
+        public async Task<IActionResult> SendMessage(UserSenderMessageRequestModel userSenderMessageRequestModel)
+        {
+            return Ok(await _messageServices.SendMessage(userSenderMessageRequestModel, HttpContext.Items["username"].ToString()));
         }
     }
 }

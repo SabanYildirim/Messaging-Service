@@ -36,7 +36,7 @@ namespace MessagingServiceApp.Infrastructure.Repositories
             _dbCollection.DeleteOne(m => m.Id == id);
         }
 
-        public virtual IEnumerable<T> GetAll()
+        public async virtual Task<IEnumerable<T>> GetAll()
         {
             return _dbCollection.Find<T>(T => true).ToList();
         }
