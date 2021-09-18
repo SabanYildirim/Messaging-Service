@@ -18,6 +18,7 @@
     "MessagingServiceApp.Api": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "Swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

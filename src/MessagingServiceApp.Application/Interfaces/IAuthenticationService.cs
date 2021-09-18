@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace MessagingServiceApp.Application.Interfaces
 {
-    public interface IUserServices
+    public interface IAuthenticationService
     {
-        Task<SuccessResponse> Add(NewUserRequestModel NewUserRequestModel);
-        Task<UserModel> GetUserByUsername(string username);
+        Task<UserLoginResponse> Login(string username,string password);
     }
 }

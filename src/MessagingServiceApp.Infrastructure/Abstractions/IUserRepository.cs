@@ -9,6 +9,6 @@ namespace MessagingServiceApp.Infrastructure.Abstractions
 {
     public interface IUserRepository : IBaseRepository<User>
     {
-
+        Task<User> GetUserByUsername(string username);
     }
 }

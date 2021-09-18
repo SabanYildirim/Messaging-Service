@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MessagingServiceApp.Application.DTO.Response
 {
-    public class ServiceResponse<T> : BaseResponse
+    public class SuccessResponse
     {
-        public T Value { get; set; }
+        public bool Success { get; set; }
     }
 }

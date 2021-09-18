@@ -9,6 +9,6 @@ namespace MessagingServiceApp.Infrastructure.Abstractions
 {
     public interface IMessageRepository : IBaseRepository<Message>
     {
-
+        Task<IEnumerable<Message>> GetMessageHistory(string username, string targetUsername);
     }
 }

@@ -10,6 +10,7 @@ namespace MessagingServiceApp.Application.Interfaces
 {
     public interface IMessageServices
     {
-        Task<ServiceResponse<bool>> SendMessage(SendMessageRequestModel userSenderMessageRequestModel, string sender);
+        Task<SuccessResponse> SendMessage(string receiverUserName, string message, string sender);
+        Task<List<MessageHistoryResponse>> GetMessageHistory(string username, string targerUsername);
     }
 }
