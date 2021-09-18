@@ -26,7 +26,7 @@ namespace MessagingServiceApp.Api.Controllers.v1
             _logger = logger;
         }
 
-        [HttpGet("/getall")]
+        [HttpGet]
         [Authorize]
         public async Task<IActionResult> Get()
         {
@@ -39,8 +39,8 @@ namespace MessagingServiceApp.Api.Controllers.v1
             return Ok(await _userServices.Login(userLoginRequest));
         }
 
-        [HttpPost("/add")]
-        public async Task<IActionResult> Add(NewUserRequestModel newUserRequestModel )
+        [HttpPost]
+        public async Task<IActionResult> Create(NewUserRequestModel newUserRequestModel )
         {
             _logger.LogInformation($"Random Value is test");
 
@@ -48,10 +48,9 @@ namespace MessagingServiceApp.Api.Controllers.v1
         }
 
         [HttpPost("/sendMessage")]
-        [Authorize]
-        public async Task<IActionResult> SendMessage(UserSenderMessageRequestModel userSenderMessageRequestModel)
+        public async Task<IActionResult> SendMessage(SendMessageRequestModel userSenderMessageRequestModel)
         {
-            return Ok(await _messageServices.SendMessage(userSenderMessageRequestModel, HttpContext.Items["username"].ToString()));
+            return Ok(await _messageServices.SendMessage(userSenderMessageRequestModel,"syildirim"));
         }
     }
 }

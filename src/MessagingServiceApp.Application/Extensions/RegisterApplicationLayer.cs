@@ -14,6 +14,7 @@ namespace MessagingServiceApp.Application.Extensions
         public static void AddApplicationLayer(this IServiceCollection services)
         {
             services.AddTransient<IUserServices, UserServices>();
+            services.AddTransient<IMessageServices, MessageService>();
         }
     }
 }

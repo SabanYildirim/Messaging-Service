@@ -11,6 +11,6 @@ namespace MessagingServiceApp.Infrastructure.BusinessEntities
     {
         public string ReceiverUserName { get; set; }
         public string SenderUserName { get; set; }
-        public string Message { get; set; }
+        public string UserMessage { get; set; }
     }
 }

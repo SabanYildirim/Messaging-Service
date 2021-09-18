@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MessagingServiceApp.Application.DTO.Request
 {
-    public class UserSenderMessageRequestModel
+    public class SendMessageRequestModel
     {
         public string ReceiverUserName { get; set; }
         public string Message { get; set; }

@@ -10,6 +10,6 @@ namespace MessagingServiceApp.Application.Interfaces
 {
     public interface IMessageServices
     {
-        Task<ServiceResponse<bool>> SendMessage(UserSenderMessageRequestModel userSenderMessageRequestModel, string sender);
+        Task<ServiceResponse<bool>> SendMessage(SendMessageRequestModel userSenderMessageRequestModel, string sender);
     }
 }

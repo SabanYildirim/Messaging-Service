@@ -45,15 +45,15 @@ namespace MessagingServiceApp.Application.Services
         {
             try
             {
-                var dbUser = await _userRepository.GetAll();
+                //var dbUser = await _userRepository.GetAll();
 
-                var user = dbUser.FirstOrDefault(i => i.UserName == userLoginReques.username && i.Password == userLoginReques.password);
+                //var user = dbUser.FirstOrDefault(i => i.UserName == userLoginReques.username && i.Password == userLoginReques.password);
 
-                if (user == null)
-                    throw new Exception("User not found or given information is wrong");
+                //if (user == null)
+                //    throw new Exception("User not found or given information is wrong");
 
-                if (!user.IsActive)
-                    throw new Exception("User state is Passive!");
+                //if (!user.IsActive)
+                //    throw new Exception("User state is Passive!");
 
                 var token = new JwtToken().GenerateToken(userLoginReques.username, _configuration["JwtSecurityKey"].ToString(), _configuration["JwtExpireInDays"].ToString(), _configuration["JwtAudience"], _configuration["JwtIssuer"]);
 

@@ -22,12 +22,12 @@ namespace MessagingServiceApp.Application.Services
             _configuration = configuration;
         }
 
-        public async Task<ServiceResponse<bool>> SendMessage(UserSenderMessageRequestModel userSenderMessageRequest, string sender)
+        public async Task<ServiceResponse<bool>> SendMessage(SendMessageRequestModel userSenderMessageRequest, string sender)
         {
             Message entity = new Message();
 
             entity.ReceiverUserName = userSenderMessageRequest.ReceiverUserName;
-            entity.Message = userSenderMessageRequest.Message;
+            entity.UserMessage = userSenderMessageRequest.Message;
             entity.SenderUserName = sender;
 
             var message = await _messageRepository.Add(entity);

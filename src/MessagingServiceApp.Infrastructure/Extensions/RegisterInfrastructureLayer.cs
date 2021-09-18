@@ -16,6 +16,7 @@ namespace MessagingServiceApp.Infrastructure.Extensions
         {
             services.AddSingleton<IMongoDBContext, MongoDBContext>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IMessageRepository, MessageRepository>();
         }
     }
 }
