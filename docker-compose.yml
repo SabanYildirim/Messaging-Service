@@ -1,0 +1,67 @@
+version: '3.4'
+
+services:
+  messagingserviceapp.api:
+    image: ${DOCKER_REGISTRY-}messagingserviceappapi
+    build:
+      context: .
+      dockerfile: src/MessagingServiceApp.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  mongodb:
+   image: mongo
+   ports:
+    - 27017:27017
+   environment:
+    - MONGO_INITDB_ROOT_USERNAME=admin 
+    - MONGO_INITDB_ROOT_PASSWORD=password 
+  
+  mongo-express:
+   image: mongo-express
+   ports:
+    - 8080:8081
+   environment:
+    - ME_CONFIG_MONGODB_ADMINUSERNAME=admin 
+    - ME_CONFIG_MONGODB_ADMINPASSWORD=password 
+    - ME_CONFIG_MONGODB_SERVER=mongodb 
+
+  elasticsearch:
+     container_name: elasticsearch
+     image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+     ports:
+      - 9200:9200
+     volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+     environment:
+      - xpack.monitoring.enabled=true
+      - xpack.watcher.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+     networks:
+      - elastic
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.6.2
+    ports:
+     - 5601:5601
+    depends_on:
+     - elasticsearch
+    environment:
+     - ELASTICSEARCH_URL=http://localhost:9200
+    networks:
+     - elastic
+
+networks:
+ elastic:
+   driver: bridge
+
+volumes:
+  elasticsearch-data:

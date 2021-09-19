@@ -22,7 +22,7 @@ namespace MessagingServiceApp.Api.Controllers.v1
         [HttpPost]
         public async Task<IActionResult> Login(UserLoginRequestModel userLoginRequest)
         {
-            return Ok(await _authenticationServices.Login(userLoginRequest));
+            return Ok(await _authenticationServices.Login(userLoginRequest.username, userLoginRequest.password));
         }
     }
 }
