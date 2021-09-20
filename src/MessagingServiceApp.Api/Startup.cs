@@ -24,6 +24,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using MessagingServiceApp.Common.Middlewares;
 
+
 namespace MessagingServiceApp.Api
 {
     public class Startup
@@ -115,10 +116,15 @@ namespace MessagingServiceApp.Api
             services.AddAuthenticationCore();
 
             services.AddLogging();
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider apiVersionDescriptionProvider)
+        public void Configure(
+            IApplicationBuilder app, 
+            IWebHostEnvironment env, 
+            IApiVersionDescriptionProvider apiVersionDescriptionProvider)
         {
             if (env.IsDevelopment())
             {
@@ -141,7 +147,7 @@ namespace MessagingServiceApp.Api
               .AllowAnyHeader());
 
             app.UseMiddleware<JwtMiddleware>();
-
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
 

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace MessagingServiceApp.Infrastructure.Abstractions
 {
-    public interface IMessageRepository : IBaseRepository<Message>
+    public interface IMessageRepository : IBaseRepository<MessageEntity>
     {
-        Task<IEnumerable<Message>> GetMessageHistory(string username, string targetUsername);
+        Task<IEnumerable<MessageEntity>> GetMessageHistory(string username, string targetUsername);
     }
 }

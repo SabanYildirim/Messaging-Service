@@ -1,4 +1,5 @@
 ﻿using MessagingServiceApp.Application.Interfaces;
+using MessagingServiceApp.Application.Mapping;
 using MessagingServiceApp.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -15,6 +16,7 @@ namespace MessagingServiceApp.Application.Extensions
         {
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<IMessageServices, MessageService>();
+            services.AddSingleton<IMessagingMapper, AutoMapping>();
         }
     }
 }

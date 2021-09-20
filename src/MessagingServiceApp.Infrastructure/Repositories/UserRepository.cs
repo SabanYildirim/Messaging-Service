@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace MessagingServiceApp.Infrastructure.Repositories
 {
-    public class UserRepository : BaseRepository<User>, IUserRepository
+    public class UserRepository : BaseRepository<UserEntity>, IUserRepository
     {
-        protected IMongoCollection<User> _dbCollection;
+        protected IMongoCollection<UserEntity> _dbCollection;
 
         public UserRepository(IMongoDBContext context) : base(context)
         {
-            _dbCollection = _mongoContext.GetCollection<User>(typeof(User).Name);
+            _dbCollection = _mongoContext.GetCollection<UserEntity>(typeof(UserEntity).Name);
         }
 
-        public async Task<User> GetUserByUsername(string username)
+        public async Task<UserEntity> GetUserByUsername(string username)
         {
-            var entity = await _dbCollection.Find<User>(m => m.UserName == username).FirstOrDefaultAsync();
+            var entity = await _dbCollection.Find<UserEntity>(m => m.UserName == username).FirstOrDefaultAsync();
 
             return entity;
         }

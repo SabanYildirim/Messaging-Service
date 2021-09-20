@@ -46,6 +46,9 @@ namespace MessagingServiceApp.Api
 
         private static void ConfigureLogging()
         {
+            var loggerFactory = new LoggerFactory();
+            loggerFactory.AddSerilog();
+
             var enviroment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -63,6 +66,8 @@ namespace MessagingServiceApp.Api
                 .Enrich.WithProperty("Enviroment", enviroment)
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
+
+            Log.Information("Starting up");
         }
 
         private static ElasticsearchSinkOptions ConfigureElasticSink(IConfiguration configuration,string environment)

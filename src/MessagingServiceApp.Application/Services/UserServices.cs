@@ -11,9 +11,13 @@ namespace MessagingServiceApp.Application.Services
     public class UserServices : IUserServices
     {
         private readonly IUserRepository _userRepository;
-        public UserServices(IUserRepository userRepository)
+        private readonly IMessagingMapper _mapper;
+
+        public UserServices(IUserRepository userRepository,
+            IMessagingMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
         public async Task<SuccessResponse> Add(NewUserRequestModel newUserRequestModel)
@@ -24,7 +28,7 @@ namespace MessagingServiceApp.Application.Services
                 throw new Exception("User found or given information is wrong");
             }
 
-            User entity = new User();
+            UserEntity entity = new UserEntity();
             entity.Name = newUserRequestModel.Name;
             entity.Surname = newUserRequestModel.Surname;
             entity.UserName = newUserRequestModel.Username;
@@ -43,20 +47,14 @@ namespace MessagingServiceApp.Application.Services
         public async Task<UserModel> GetUserByUsername(string username)
         {
             var userEntity = await _userRepository.GetUserByUsername(username);
-
             if (userEntity == null)
             {
                 return null;
             }
 
-            UserModel userModel = new UserModel();
+            var map = _mapper.Map<UserEntity, UserModel>(userEntity);
 
-            userModel.Name = userEntity.Name;
-            userModel.Surname = userEntity.Surname;
-            userModel.Password = userEntity.Password;
-            userModel.IsActive = userEntity.IsActive;
-
-            return userModel;
+            return map;
         }
     }
 }

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace MessagingServiceApp.Infrastructure.Abstractions
 {
-    public interface IUserRepository : IBaseRepository<User>
+    public interface IUserRepository : IBaseRepository<UserEntity>
     {
-        Task<User> GetUserByUsername(string username);
+        Task<UserEntity> GetUserByUsername(string username);
     }
 }

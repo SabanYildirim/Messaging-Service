@@ -3,7 +3,7 @@
 namespace MessagingServiceApp.Infrastructure.BusinessEntities
 {
     [BsonCollection("users")]
-    public class User : BaseEntity
+    public class UserEntity : BaseEntity
     {
         public string UserName { get; set; }
         public string Name { get; set; }

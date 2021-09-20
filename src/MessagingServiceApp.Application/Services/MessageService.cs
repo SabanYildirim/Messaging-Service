@@ -17,12 +17,17 @@ namespace MessagingServiceApp.Application.Services
         private readonly IMessageRepository _messageRepository;
         private readonly IConfiguration _configuration;
         private readonly IUserServices _userService;
+        private readonly IMessagingMapper _mapper;
 
-        public MessageService(IMessageRepository messageRepository, IConfiguration configuration, IUserServices userServices)
+        public MessageService(IMessageRepository messageRepository, 
+            IConfiguration configuration, 
+            IUserServices userServices,
+            IMessagingMapper mapper)
         {
             _messageRepository = messageRepository;
             _configuration = configuration;
             _userService = userServices;
+            _mapper = mapper;
         }
 
         public async Task<SuccessResponse> SendMessage(string receiverUserName, string message, string sender)
@@ -33,7 +38,7 @@ namespace MessagingServiceApp.Application.Services
                 throw new Exception("User not found or given information is wrong");
             }
 
-            Message entity = new Message();
+            MessageEntity entity = new MessageEntity();
             entity.ReceiverUsername = receiverUserName;
             entity.UserMessage = message;
             entity.SenderUsername = sender;
@@ -50,16 +55,9 @@ namespace MessagingServiceApp.Application.Services
         public async Task<List<MessageHistoryResponse>> GetMessageHistory(string username, string targetUsername)
         {
             var message = await _messageRepository.GetMessageHistory(username, targetUsername);
+            var map = _mapper.Map<List<MessageEntity>, List<MessageHistoryResponse>>(message.ToList());
 
-            var model = message.Select(x => new MessageHistoryResponse
-            {
-                ReceiverUserName = x.ReceiverUsername,
-                SendDate = x.CreateDate,
-                SenderUserName = x.SenderUsername,
-                UserMessage = x.UserMessage
-            }).OrderByDescending(x => x.SendDate).ToList();
-
-            return model;
+            return map.OrderByDescending(x => x.SendDate).ToList();
         }
     }
 }
