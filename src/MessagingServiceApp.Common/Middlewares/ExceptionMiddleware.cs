@@ -1,5 +1,6 @@
 ﻿using MessagingServiceApp.Common.Results;
 using MessagingServiceApp.Common.Results.Concrete;
+using MessagingServiceApp.Common.Utilities;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Serilog;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static MessagingServiceApp.Common.Utilities.SerilogExtensions;
 
 namespace MessagingServiceApp.Common.Middlewares
 {
@@ -58,12 +60,18 @@ namespace MessagingServiceApp.Common.Middlewares
 
         private async Task HandleError(HttpContext context, string ex, int statusCode)
         {
-            _logger.Error(ex);
+            var logModel = new LoggerModel
+            {
+                ResponseStatusCode = statusCode,
+                InnerException = ex
+            };
+
+            _logger.PrepareLogger(logModel).Error(LoggerTemplates.Error);
 
             var responseModel = new ExceptionResponse
             {
-                 StatusCode = statusCode,
-                 Message = ex,
+                StatusCode = statusCode,
+                Message = ex,
             };
 
             var responseBody = System.Text.Json.JsonSerializer.Serialize(responseModel, new JsonSerializerOptions

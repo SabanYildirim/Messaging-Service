@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MessagingServiceApp.Common
+namespace MessagingServiceApp.Common.Interfaces
 {
     public interface IMongoDbSettings
     {

@@ -10,7 +10,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - MongoDBSettings:ConnectionStrings=mongodb://messagedb:27017
-      - ElasticConfiguration:Uri=http://elasticsearch:9200"
+      - ElasticConfiguration:Uri=http://host.docker.internal:9200"
     ports:
       - "80"
       - "443"
@@ -23,37 +23,38 @@ services:
    container_name: messagedb
    image: mongo
    ports:
-    - "27017:27017"
+    - 27017:27017
 
   elasticsearch:
-     container_name: elasticsearch
-     image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
-     ports:
-      - 9200:9200
-     volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data
-     environment:
-      - xpack.monitoring.enabled=true
-      - xpack.watcher.enabled=false
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - discovery.type=single-node
-     networks:
-      - elastic
-  kibana:
-    container_name: kibana
-    image: docker.elastic.co/kibana/kibana:7.6.2
-    ports:
-     - 5601:5601
-    depends_on:
-     - elasticsearch
-    environment:
-     - ELASTICSEARCH_URL=http://elasticsearch:9200
-    networks:
-     - elastic
+   container_name: elasticsearch
+   image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+   ports:
+    - 9200:9200
+   volumes:
+    - elasticsearch-data:/usr/share/elasticsearch/data
+   environment:
+    - xpack.monitoring.enabled=true
+    - xpack.watcher.enabled=false
+    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    - discovery.type=single-node
+   networks:
+    - elastic
 
+  kibana:
+   container_name: kibana
+   image: docker.elastic.co/kibana/kibana:7.9.2
+   ports:
+    - 5601:5601
+   depends_on:
+    - elasticsearch
+   environment:
+    - ELASTICSEARCH_URL=http://host.docker.internal:9200
+   networks:
+    - elastic
+  
 networks:
- elastic:
-   driver: bridge
+  elastic:
+    driver: bridge
 
 volumes:
   elasticsearch-data:

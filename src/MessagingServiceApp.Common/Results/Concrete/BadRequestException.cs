@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MessagingServiceApp.Common.Interfaces;
+using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MessagingServiceApp.Common.Results.Concrete
 {
-        public class BadRequestException : Exception, IMessagingException
+    public class BadRequestException : Exception, IMessagingException
         {
             /// <summary>
             /// Status Code

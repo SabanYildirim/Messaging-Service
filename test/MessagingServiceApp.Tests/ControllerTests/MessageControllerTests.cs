@@ -17,6 +17,7 @@ namespace MessagingServiceApp.Tests.ControllerTests
         private readonly string _targerUserName;
         private readonly Mock<IMessageServices> _messageService;
         private readonly Mock<ILogger<MessageController>> _ILogger;
+    
 
         public MessegeControllerTests()
         {
@@ -25,7 +26,8 @@ namespace MessagingServiceApp.Tests.ControllerTests
             _messageService = new Mock<IMessageServices>();
             _ILogger = new Mock<ILogger<MessageController>>();
             _sut = new MessageController(_messageService.Object);
-
+            _sut.ControllerContext.HttpContext = new DefaultHttpContext();
+            _sut.ControllerContext.HttpContext.Items["username"] = _targerUserName;
         }
 
         [Fact]

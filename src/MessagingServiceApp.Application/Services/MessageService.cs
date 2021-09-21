@@ -57,7 +57,12 @@ namespace MessagingServiceApp.Application.Services
             var message = await _messageRepository.GetMessageHistory(username, targetUsername);
             var map = _mapper.Map<List<MessageEntity>, List<MessageHistoryResponse>>(message.ToList());
 
-            return map.OrderByDescending(x => x.SendDate).ToList();
+            if (map != null)
+            {
+                return map.OrderByDescending(x => x.SendDate).ToList();
+            }
+
+            return new List<MessageHistoryResponse>();
         }
     }
 }

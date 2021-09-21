@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MessagingServiceApp.Common.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MessagingServiceApp.Common.Extensions
 {

@@ -5,7 +5,7 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectGuid>46d82526-1dc7-4f6e-b75a-59600c06c774</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/Swagger</DockerServiceUrl>
     <DockerServiceName>messagingserviceapp.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

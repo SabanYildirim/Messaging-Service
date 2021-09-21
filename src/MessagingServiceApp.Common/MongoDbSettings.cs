@@ -1,4 +1,5 @@
-﻿
+﻿using MessagingServiceApp.Common.Interfaces;
+
 namespace MessagingServiceApp.Common
 {
     public class MongoDbSettings : IMongoDbSettings

@@ -24,8 +24,6 @@ namespace MessagingServiceApp.Api.Controllers.v1
         [HttpPost]
         public async Task<IActionResult> Create(NewUserRequestModel newUserRequestModel )
         {
-            _logger.LogInformation($"Random Value is test");
-
             return Ok(await _userServices.Add(newUserRequestModel));
         }
     }

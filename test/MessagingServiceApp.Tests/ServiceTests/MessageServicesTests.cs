@@ -79,7 +79,7 @@ namespace MessagingServiceApp.Tests.ServiceTests
             var actual = _sut.GetMessageHistory(_username, _receiverUserName).GetAwaiter().GetResult();
 
             //Assert
-            Assert.NotNull(actual);
+            Assert.IsType<List<MessageHistoryResponse>>(actual);
         }
     }
 }

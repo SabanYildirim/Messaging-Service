@@ -1,3 +1,4 @@
+using MessagingServiceApp.Common.Utilities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -16,8 +17,6 @@ namespace MessagingServiceApp.Api
     {
         public static void Main(string[] args)
         {
-            ConfigureLogging();
-
             try
             {
                 CreateHostBuilder(args).Build().Run();
@@ -30,53 +29,12 @@ namespace MessagingServiceApp.Api
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                })
-            .ConfigureAppConfiguration(configuration =>
-            {
-                configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-                configuration.AddJsonFile(
-                 $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
-                 optional: true);
-            })
-            .UseSerilog();
-
-        private static void ConfigureLogging()
+        Host.CreateDefaultBuilder(args)
+        .UseSerilog(SerilogHelper.Configure)
+        .ConfigureWebHostDefaults(webBuilder =>
         {
-            var loggerFactory = new LoggerFactory();
-            loggerFactory.AddSerilog();
+         webBuilder.UseStartup<Startup>();
+        });
 
-            var enviroment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile(
-                 $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
-                 optional: true)
-                .Build();
-
-            Log.Logger = new LoggerConfiguration()
-                .Enrich.FromLogContext()
-                .Enrich.WithMachineName()
-                .WriteTo.Debug()
-                .WriteTo.Console()
-                .WriteTo.Elasticsearch(ConfigureElasticSink(configuration, enviroment))
-                .Enrich.WithProperty("Enviroment", enviroment)
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
-
-            Log.Information("Starting up");
-        }
-
-        private static ElasticsearchSinkOptions ConfigureElasticSink(IConfiguration configuration,string environment)
-        {
-            return new ElasticsearchSinkOptions(new Uri(configuration["ElasticConfiguration:Uri"]))
-            {
-                AutoRegisterTemplate = true,
-                IndexFormat = $"{Assembly.GetExecutingAssembly().GetName().Name.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}"
-            };
-        }
     }
 }
