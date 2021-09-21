@@ -32,7 +32,7 @@ namespace MessagingServiceApp.Application.Services
 
         public async Task<SuccessResponse> SendMessage(string receiverUserName, string message, string sender)
         {
-            var user = _userService.GetUserByUsername(receiverUserName);
+            var user = _userService.GetUserByUsername(receiverUserName).GetAwaiter().GetResult();
             if (user == null)
             {
                 throw new Exception("User not found or given information is wrong");

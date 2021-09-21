@@ -17,6 +17,7 @@ namespace MessagingServiceApp.Application.Extensions
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<IMessageServices, MessageService>();
             services.AddSingleton<IMessagingMapper, AutoMapping>();
+            services.AddSingleton<IAuthenticationService, AuthenticationService>();
         }
     }
 }
