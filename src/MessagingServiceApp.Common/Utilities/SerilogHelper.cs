@@ -15,8 +15,7 @@ namespace MessagingServiceApp.Common.Utilities
         /// 
         public static Action<HostBuilderContext, LoggerConfiguration> Configure => (ctx, cfg) =>
         {
-
-            var elasticSearchUri = "http://host.docker.internal:9200";
+            var elasticSearchUri = ctx.Configuration.GetValue<string>("ElasticConfiguration:Uri");
 
             cfg.Enrich.FromLogContext()
             .Enrich.WithMachineName()
