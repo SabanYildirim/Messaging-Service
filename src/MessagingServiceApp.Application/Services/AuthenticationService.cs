@@ -24,7 +24,7 @@ namespace MessagingServiceApp.Application.Services
         {
             try
             {
-                UserModel user = _userService.GetUserByUsername(username).GetAwaiter().GetResult();
+                UserModel user = await _userService.GetUserByUsername(username);
 
                 if (user == null || user.Password != password)
                     throw new Exception("User not found or given information is wrong");

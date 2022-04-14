@@ -42,19 +42,19 @@ namespace MessagingServiceApp.Common.Middlewares
             }
             catch (BadRequestException ex)
             {
-                await HandleError(context, ex.Message, StatusCodes.Status400BadRequest).ConfigureAwait(false);
+                await HandleError(context, ex.Message, StatusCodes.Status400BadRequest);
             }
             catch (NotFoundException ex)
             {
-                await HandleError(context, ex.Message, StatusCodes.Status404NotFound).ConfigureAwait(false);
+                await HandleError(context, ex.Message, StatusCodes.Status404NotFound);
             }
             catch (ValidatorException ex)
             {
-                await HandleError(context, ex.Message, StatusCodes.Status400BadRequest).ConfigureAwait(false);
+                await HandleError(context, ex.Message, StatusCodes.Status400BadRequest);
             }
             catch (Exception ex)
             {
-                await HandleError(context, ex.Message, StatusCodes.Status500InternalServerError).ConfigureAwait(false);
+                await HandleError(context, ex.Message, StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -82,7 +82,7 @@ namespace MessagingServiceApp.Common.Middlewares
             context.Response.Clear();
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = statusCode;
-            await context.Response.WriteAsync(responseBody, Encoding.UTF8).ConfigureAwait(false);
+            await context.Response.WriteAsync(responseBody, Encoding.UTF8);
         }
     }
 }
